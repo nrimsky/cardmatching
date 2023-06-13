@@ -1,6 +1,6 @@
 
 const shapes = ['triangle', 'star', 'cross', 'circle'];
-const colors = ['red', 'green', 'yellow', 'blue'];
+const colors = ['red', 'green', 'orange', 'blue'];
 const numbers = [1, 2, 3, 4];
 
 function generateRule() {
