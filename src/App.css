@@ -65,4 +65,15 @@ button.export:hover {
   margin-top: 20px;
   padding: 10px;
   font-size: 21px;
+  width: 100%;
+  text-align: center;
+  height: 60px;
+}
+
+.message.success {
+  color: green;
+}
+
+.message.error {
+  color: red;
 }

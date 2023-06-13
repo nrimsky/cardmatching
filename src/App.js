@@ -13,7 +13,7 @@ function App() {
     timeElapsed: 0,
   }]);
   const [startTime, setStartTime] = useState(null);
-  const [message, setMessage] = useState('.');
+  const [message, setMessage] = useState('   ');
 
   useEffect(() => {
     const newRule = generateRule();
@@ -25,7 +25,7 @@ function App() {
 
   useEffect(() => {
     const lastResult = results[results.length - 1];
-    if (lastResult.nCorrect === 10) {
+    if (lastResult.nCorrect >= 10) {
       const newRule = generateRule();
       setRule(newRule);
       const cards = generateDeck(newRule);
@@ -53,6 +53,13 @@ function App() {
     }
   }, [results]);
 
+  useEffect(() => {
+    // Fade message after 2 seconds
+    setTimeout(() => {
+      setMessage('   ');
+    }, 1000);
+  }, [message]);
+
   const exportResults = () => {
     const blob = new Blob([JSON.stringify(results, null, 2)], { type: 'application/json' });
     const link = document.createElement("a");
@@ -69,7 +76,7 @@ function App() {
       <h1>Card matching exercise</h1>
       <p>Click on the top card that matches the bottom card</p>
       <div className='top-cards'>
-        {cards.slice(0, 5).map((card, index) => (
+        {cards.slice(0, 4).map((card, index) => (
           <Card {...card} id={index} isSelectable={true} key={index} onClick={() => {
             const isCorrectMatchCard = isCorrectMatch(card, cards[cards.length - 1], rule);
             console.log(isCorrectMatchCard, rule);
@@ -96,7 +103,7 @@ function App() {
       <div className='bottom-card'>
         <Card {...cards[cards.length - 1]} />
       </div>
-      <p className='message'>{message}</p>
+      <p className={message.includes('Correct') ? 'message success' : 'message error'}>{message}</p>
       <button className='export' onClick={exportResults}>Export results</button>
     </div>
   );

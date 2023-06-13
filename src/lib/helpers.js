@@ -1,7 +1,7 @@
 
-const shapes = ['circle', 'square', 'triangle', 'star'];
-const colors = ['red', 'blue', 'yellow', 'green', 'purple', 'orange'];
-const numbers = [1, 2, 3, 4, 5, 6];
+const shapes = ['triangle', 'star', 'cross', 'circle'];
+const colors = ['red', 'green', 'yellow', 'blue'];
+const numbers = [1, 2, 3, 4];
 
 function generateRule() {
     // Pick one of Match on Shape, Match on Color, Match on Number
@@ -15,37 +15,53 @@ function generateDeck(rule) {
     // There should be exactly one match
     // Each card should have a shape, color, and number
     const deck = [];
+    for (let i = 0; i < 4; i++) {
+        deck.push({
+            shape: shapes[i],
+            color: colors[i],
+            number: numbers[i],
+        });
+    }
+
     const bottomCard = {
-        shape: shapes[Math.floor(Math.random() * shapes.length)],
-        color: colors[Math.floor(Math.random() * colors.length)],
-        number: numbers[Math.floor(Math.random() * numbers.length)],
     };
-    const matchIndex = Math.floor(Math.random() * 5);
+    const matchIndex = Math.floor(Math.random() * 4);
+    const card = deck[matchIndex];
 
-    for (let i = 0; i < 5; i++) {
-        const card = {
-            shape: shapes[Math.floor(Math.random() * shapes.length)],
-            color: colors[Math.floor(Math.random() * colors.length)],
-            number: numbers[Math.floor(Math.random() * numbers.length)],
-        };
+    switch (rule) {
+        case 'Match on Shape':
+            bottomCard.shape = card.shape;
+            // Other properties are random but not the same as the match
+            do {
+                bottomCard.color = colors[Math.floor(Math.random() * 4)];
+            } while (bottomCard.color === card.color);
+            do {
+                bottomCard.number = numbers[Math.floor(Math.random() * 4)];
+            } while (bottomCard.number === card.number);
 
-        if (i === matchIndex) {
-            switch (rule) {
-                case 'Match on Shape':
-                    card.shape = bottomCard.shape;
-                    break;
-                case 'Match on Color':
-                    card.color = bottomCard.color;
-                    break;
-                case 'Match on Number':
-                    card.number = bottomCard.number;
-                    break;
-                default:
-                    throw new Error('Invalid rule');
-            }
-        }
+            break;
+        case 'Match on Color':
+            bottomCard.color = card.color;
+            do {
+                bottomCard.shape = shapes[Math.floor(Math.random() * 4)];
+            } while (bottomCard.shape === card.shape);
+            do {
+                bottomCard.number = numbers[Math.floor(Math.random() * 4)];
+            } while (bottomCard.number === card.number);
 
-        deck.push(card);
+            break;
+        case 'Match on Number':
+            bottomCard.number = card.number;
+            do {
+                bottomCard.color = colors[Math.floor(Math.random() * 4)];
+            } while (bottomCard.color === card.color);
+            do {
+                bottomCard.shape = shapes[Math.floor(Math.random() * 4)];
+            } while (bottomCard.shape === card.shape);
+
+            break;
+        default:
+            throw new Error('Invalid rule');
     }
 
     deck.push(bottomCard);
