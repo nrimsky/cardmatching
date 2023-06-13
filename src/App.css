@@ -77,3 +77,10 @@ button.export:hover {
 .message.error {
   color: red;
 }
+
+.letter {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}

@@ -58,7 +58,7 @@ function App() {
     setResults(prevResults => {
       const newResults = [...prevResults, {
         isCorrect: isCorrectMatchCard,
-        timeElapsed: timeElapsed/1000,
+        timeElapsed: timeElapsed / 1000,
         rule: rule,
       }];
       return newResults;
@@ -110,8 +110,8 @@ function App() {
   if (roundsCompleted >= MAX_ROUNDS) {
     return (
       <div className='game'>
-        <h1>Game Finished</h1>
-        <p>All rounds completed. You can no longer click around.</p>
+        <h1>Task Finished</h1>
+        <p>All rounds completed.</p>
         <button className='export' onClick={exportResults}>Export results</button>
       </div>
     );
@@ -119,12 +119,16 @@ function App() {
 
   return (
     <div className='game'>
-      <h1>Card matching exercise</h1>
-      <p>Click on the top card that matches the bottom card</p>
+      <h1>Card Sorting Task</h1>
       <div className='top-cards'>
+
         {cards.slice(0, 4).map((card, index) => (
-          <Card {...card} id={index} isSelectable={true} key={index} onClick={() => handleCardClick(card)} />
+          <div className='card-wrapper'>
+            <Card {...card} id={index} isSelectable={true} key={index} onClick={() => handleCardClick(card)} />
+            <span className='letter'>{['d', 'v', 'n', 'k'][index]}</span>
+          </div>
         ))}
+
       </div>
       <div className='bottom-card'>
         <Card {...cards[cards.length - 1]} />
