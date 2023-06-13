@@ -49,17 +49,17 @@ function App() {
     setCards(cards);
   }
 
-  useEffect(() => {
+  function shouldStartNewRound() {
     if (results.length - refIdx >= CONSECUTIVE_CORRECT_ANSWERS) {
-      const last10 = results.slice(results.length - CONSECUTIVE_CORRECT_ANSWERS, results.length);
+      const last10 = results.slice(results.length - CONSECUTIVE_CORRECT_ANSWERS + 1, results.length);
       // Were all correct?
       if (last10.every(result => result.corr === 1)) {
-        startNewRound();
-        setRoundsCompleted(prevRoundsCompleted => prevRoundsCompleted + 1);
-        setRefIdx(results.length);
+        return true;
       }
     }
-  }, [results, refIdx]);
+    return false;
+  }
+
 
   useEffect(() => {
     // Fade message after 2 seconds
@@ -74,7 +74,7 @@ function App() {
 
   const handleCardClick = (card, index) => {
     const isCorrectMatchCard = isCorrectMatch(card, cards[cards.length - 1], rule);
-    const abstime = (Date.now() - startTime)/1000;
+    const abstime = (Date.now() - startTime) / 1000;
     const timeElapsed = abstime - results[results.length - 1]?.abstime ?? 0;
     const persevError = !isCorrectMatchCard && lastRule !== null && isCorrectMatch(card, cards[cards.length - 1], lastRule);
 
@@ -110,8 +110,14 @@ function App() {
 
     setMessage(isCorrectMatchCard ? 'Correct!' : 'Incorrect!');
 
-    const newDeck = generateDeck(rule);
-    setCards(newDeck);
+    if (shouldStartNewRound()) {
+      setRoundsCompleted(roundsCompleted + 1);
+      startNewRound();
+      setRefIdx(results.length);
+    } else {
+      const newDeck = generateDeck(rule);
+      setCards(newDeck);
+    }
   };
 
 
