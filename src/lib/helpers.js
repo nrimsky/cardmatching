@@ -9,6 +9,18 @@ function generateRule() {
     return rule;
 }
 
+function generateNewRule(rule) {
+    const rules = ['Match on Shape', 'Match on Color', 'Match on Number'];
+    let newRule;
+
+    do {
+        newRule = rules[Math.floor(Math.random() * 3)];
+    } while (newRule === rule);
+
+    return newRule;
+}
+
+
 function generateDeck(rule) {
     // Given a rule, only one of the top row cards will match the bottom card
     // Return an array of 5 top cards plus the bottom card as the last element
@@ -83,4 +95,4 @@ function isCorrectMatch(card1, card2, rule) {
     }
 }
 
-export { generateRule, generateDeck, shapes, colors, numbers, isCorrectMatch };
+export { generateRule, generateDeck, shapes, colors, numbers, isCorrectMatch, generateNewRule };

@@ -84,3 +84,21 @@ button.export:hover {
   justify-content: center;
   display: flex;
 }
+
+.intro {
+  font-size: 21px;
+}
+
+.intro > button {
+  margin-left: 20px;
+  padding: 10px;
+  border: 1px solid grey;
+  border-radius: 1px;
+  background-color: #e9f0ff;
+  cursor: pointer;
+}
+
+.intro > input {
+  width: 300px;
+  padding: 10px;
+}
