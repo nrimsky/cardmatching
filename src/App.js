@@ -13,6 +13,7 @@ function App() {
     timeElapsed: 0,
   }]);
   const [startTime, setStartTime] = useState(null);
+  const [message, setMessage] = useState('.');
 
   useEffect(() => {
     const newRule = generateRule();
@@ -78,12 +79,14 @@ function App() {
                 newResults[newResults.length - 1].nCorrect++;
                 return newResults;
               });
+              setMessage('Correct!');
             } else {
               setResults(prevResults => {
                 const newResults = [...prevResults];
                 newResults[newResults.length - 1].nIncorrect++;
                 return newResults;
               });
+              setMessage('Incorrect!');
             }
             const newDeck = generateDeck(rule);
             setCards(newDeck);
@@ -93,6 +96,7 @@ function App() {
       <div className='bottom-card'>
         <Card {...cards[cards.length - 1]} />
       </div>
+      <p className='message'>{message}</p>
       <button className='export' onClick={exportResults}>Export results</button>
     </div>
   );

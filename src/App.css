@@ -60,3 +60,9 @@ button.export:hover {
   background-color: #d9e0ff;
   cursor: pointer;
 }
+
+.message {
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 21px;
+}
