@@ -123,8 +123,8 @@ function App() {
       <div className='top-cards'>
 
         {cards.slice(0, 4).map((card, index) => (
-          <div className='card-wrapper'>
-            <Card {...card} id={index} isSelectable={true} key={index} onClick={() => handleCardClick(card)} />
+          <div className='card-wrapper' key={index} >
+            <Card {...card} id={index} isSelectable={true} onClick={() => handleCardClick(card)} />
             <span className='letter'>{['d', 'v', 'n', 'k'][index]}</span>
           </div>
         ))}
