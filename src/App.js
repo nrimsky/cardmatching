@@ -80,6 +80,8 @@ function App() {
     const timeElapsed = abstime - results[results.length - 1]?.abstime ?? 0;
     const persevError = !isCorrectMatchCard && lastRule !== null && isCorrectMatch(card, cards[cards.length - 1], lastRule);
 
+    const resp = ['d', 'v', 'n', 'k'][index];
+
     setResults(prevResults => {
       const newResults = [...prevResults, {
         subnum: subnum,
@@ -89,10 +91,9 @@ function App() {
         color: card.color,
         shape: card.shape,
         number: card.number,
-        resp: index + 1,
+        resp: resp,
         corr: isCorrectMatchCard ? 1 : 0,
-        lastrule: lastRule,
-        last_corr: lastCorr,
+        last_corr: lastCorr ? 1 : 0,
         corr_col: lastCorrectCard?.color,
         corr_shape: lastCorrectCard?.shape,
         corr_num: lastCorrectCard?.number,
@@ -150,7 +151,7 @@ function App() {
   }, [cards, handleCardClick, introFinished]);
 
   const exportResults = () => {
-    let csvContent = "subnum,trial,run,rule,color,shape,number,resp,corr,lastrule,last_corr,corr_col,corr_shape,corr_num,persev,persev_err,rt,abstime\n";
+    let csvContent = "subnum,trial,run,rule,color,shape,number,resp,corr,last_corr,corr_col,corr_shape,corr_num,persev,persev_err,rt,abstime\n";
     results.forEach(function (rowArray) {
       let row = Object.values(rowArray).join(",");
       csvContent += row + "\r\n";
