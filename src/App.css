@@ -62,12 +62,17 @@ button.export:hover {
 }
 
 .message {
-  margin-top: 20px;
-  padding: 10px;
   font-size: 21px;
-  width: 100%;
-  text-align: center;
-  height: 60px;
+  display: inline-flex;
+  margin: 48px auto;
+  padding: 0;
+}
+
+.bottom-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .message.success {

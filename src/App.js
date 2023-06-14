@@ -196,10 +196,11 @@ function App() {
         ))}
 
       </div>
-      <div className='bottom-card'>
+      <div className='bottom-section'>
         <Card {...cards[cards.length - 1]} />
+        <p className={message.includes('Correct') ? 'message success' : 'message error'}>{message}</p>
       </div>
-      <p className={message.includes('Correct') ? 'message success' : 'message error'}>{message}</p>
+      
       <button className='export' onClick={exportResults}>Export results</button>
     </div>
   );
