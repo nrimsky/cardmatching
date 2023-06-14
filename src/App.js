@@ -191,6 +191,7 @@ function App() {
   return (
     <div className='game'>
       <h1>Card Sorting Task</h1>
+      <h2>Use keyboard to sort card</h2>
       <div className='top-cards'>
 
         {cards.slice(0, 4).map((card, index) => (
@@ -205,8 +206,6 @@ function App() {
         <Card {...cards[cards.length - 1]} />
         <p className={message.includes('Correct') ? 'message success' : 'message error'}>{message}</p>
       </div>
-
-      <button className='export' onClick={exportResults}>Export results</button>
     </div>
   );
 }

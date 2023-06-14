@@ -52,7 +52,7 @@ export default function Intro({ onComplete }) {
       <div className="intro-text">
         <p>{allText[textIndex]}</p>
       </div>
-      <p>Press any key to continue</p>
+      <p>Press any key to {textIndex === 3 ? 'begin': 'continue'}</p>
     </div>
   );
 }
