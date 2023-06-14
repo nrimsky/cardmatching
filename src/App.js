@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Card from './components/Card';
 import './App.css'
-import { generateDeck, generateNewRule, isCorrectMatch, generateRule } from './lib/helpers';
+import { generateDeck, generateNewRule, isCorrectMatch, generateRule, getCorrectMatch } from './lib/helpers';
 import Intro from './components/Intro';
 
-const MAX_ROUNDS = 3;
+const MAX_CLICKS = 64;
 const CONSECUTIVE_CORRECT_ANSWERS = 10;
 
 const FINISHED_TEXT = "You have now completed the task. Please download the results by clicking 'export results,' and email them to the investigator. Once you have downloaded your results, you may close this page and return to the survey.";
@@ -18,13 +18,9 @@ function App() {
   const [message, setMessage] = useState('   ');
   const [roundsCompleted, setRoundsCompleted] = useState(0);
   const [introFinished, setIntroFinished] = useState(false);
-  const [lastRule, setLastRule] = useState(null);
-  const [lastCorr, setLastCorr] = useState(null);
-  const [lastCorrectCard, setLastCorrectCard] = useState(null);
-  const [persevErrors, setPersevErrors] = useState(0);
-  const [persev, setPersev] = useState(0);
   const [subnum, setSubnum] = useState(null);
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+  const [lastRule, setLastRule] = useState(null);
 
   useEffect(() => {
     if (introFinished && startTime === null) {
@@ -33,14 +29,9 @@ function App() {
     }
   }, [introFinished]);
 
-  useEffect(() => {
-    if (lastRule !== null && rule !== lastRule) {
-      setPersev(0);
-    }
-  }, [rule]);
-
 
   const startNewRound = () => {
+    setLastRule(rule);
     let newRule;
     if (rule) {
       newRule = generateNewRule(rule);
@@ -78,27 +69,33 @@ function App() {
   const handleCardClick = (card, index) => {
     setSelectedCardIndex(index);
     const isCorrectMatchCard = isCorrectMatch(card, cards[cards.length - 1], rule);
-    const abstime = (Date.now() - startTime) / 1000;
-    const timeElapsed = abstime - results[results.length - 1]?.abstime ?? 0;
     const persevError = !isCorrectMatchCard && lastRule !== null && isCorrectMatch(card, cards[cards.length - 1], lastRule);
-
+    const persev = (results[results.length-1]?.persev ?? 0) + (persevError ? 1: 0);
+    const lastCorr = results[results.length]?.corr;
+    const correctMatch = getCorrectMatch(card, rule);
+    const abstime = (Date.now() - startTime) / 1000;
+    let timeElapsed;
+    if (results.length > 0) {
+      timeElapsed = abstime - results[results.length - 1]?.abstime ?? 0;
+    } else {
+      timeElapsed = abstime;
+    }
     const resp = ['d', 'v', 'n', 'k'][index];
-
     setResults(prevResults => {
       const newResults = [...prevResults, {
         subnum: subnum,
         trial: prevResults.length + 1,
         run: roundsCompleted + 1,
         rule: rule,
-        color: card.color,
-        shape: card.shape,
-        number: card.number,
+        color: cards[cards.length - 1].color,
+        shape: cards[cards.length - 1].shape,
+        number: cards[cards.length - 1].number,
         resp: resp,
         corr: isCorrectMatchCard ? 1 : 0,
-        last_corr: lastCorr ? 1 : 0,
-        corr_col: lastCorrectCard?.color,
-        corr_shape: lastCorrectCard?.shape,
-        corr_num: lastCorrectCard?.number,
+        last_corr: lastCorr,
+        corr_col: correctMatch.color,
+        corr_shape: correctMatch.shape,
+        corr_num: correctMatch.number,
         persev: persev,
         persev_err: persevError ? 1 : 0,
         rt: timeElapsed,
@@ -106,12 +103,6 @@ function App() {
       }];
       return newResults;
     });
-
-    setLastRule(rule);
-    setLastCorr(isCorrectMatchCard);
-    setLastCorrectCard(cards[cards.length - 1]);
-    setPersevErrors(persevErrors + (persevError ? 1 : 0));
-    setPersev(persev + (isCorrectMatchCard ? 0 : 1));
 
     setMessage(isCorrectMatchCard ? 'Correct!' : 'Incorrect!');
 
@@ -127,12 +118,11 @@ function App() {
 
 
   useEffect(() => {
-    // dvnk maps to 0123 for the 4 cards
-    // we have onPress listeners for keys d v n k
     if (!introFinished) {
       return;
     }
-    const handleKeyPress = (event) => {
+
+    const handleKeyDown = (event) => {
       const key = event.key;
       let index;
       if (key === 'd') {
@@ -149,10 +139,16 @@ function App() {
       }
     };
 
-    document.addEventListener('keypress', handleKeyPress);
+    const handleKeyUp = (event) => {
+      setSelectedCardIndex(null);
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
 
     return () => {
-      document.removeEventListener('keypress', handleKeyPress);
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('keyup', handleKeyUp);
     };
   }, [cards, introFinished]);
 
@@ -175,7 +171,7 @@ function App() {
 
 
 
-  if (roundsCompleted >= MAX_ROUNDS) {
+  if (results.length >= MAX_CLICKS) {
     return (
       <div className='game'>
         <h1>Task Finished</h1>

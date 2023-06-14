@@ -95,4 +95,23 @@ function isCorrectMatch(card1, card2, rule) {
     }
 }
 
-export { generateRule, generateDeck, shapes, colors, numbers, isCorrectMatch, generateNewRule };
+function getCorrectMatch(card, rule) {
+    const deck = [];
+    for (let i = 0; i < 4; i++) {
+        deck.push({
+            shape: shapes[i],
+            color: colors[i],
+            number: numbers[i],
+        });
+    }
+    for (let i = 0; i < deck.length; i++) {
+        if (isCorrectMatch(deck[i], card, rule)) {
+            return deck[i];
+        }
+    }
+    throw new Error('No match found');
+}
+
+
+
+export { generateRule, generateDeck, shapes, colors, numbers, isCorrectMatch, generateNewRule, getCorrectMatch };

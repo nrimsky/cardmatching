@@ -7,7 +7,7 @@
   border-radius: 5px;
   margin: 10px;
   background-color: #fafafa;
-  box-shadow: 0px 4px 6px rgba(0,0,0,0.2);
+  box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
   width: 100px;
   height: 180px;
 }
@@ -16,14 +16,9 @@
   cursor: pointer;
 }
 
-.selectable-card:hover {
+.selectable-card:hover, .selectable-card.selected {
   box-shadow: 0px 4px 8px rgba(0,0,0,0.6);
 }
-
-.selectable-card.selected {
-  border-width: 2px;
-}
-
 .selectable-card:active {
   box-shadow: 0px 4px 8px rgba(0,0,0,0.6);
 }
