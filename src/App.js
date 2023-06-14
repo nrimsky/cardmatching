@@ -72,7 +72,7 @@ function App() {
     const persevError = !isCorrectMatchCard && lastRule !== null && isCorrectMatch(card, cards[cards.length - 1], lastRule);
     const persev = (results[results.length-1]?.persev ?? 0) + (persevError ? 1: 0);
     const lastCorr = results[results.length]?.corr;
-    const correctMatch = getCorrectMatch(card, rule);
+    const correctMatch = getCorrectMatch(cards[cards.length - 1], rule);
     const abstime = (Date.now() - startTime) / 1000;
     let timeElapsed;
     if (results.length > 0) {
