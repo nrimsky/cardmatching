@@ -7,6 +7,8 @@ import Intro from './components/Intro';
 const MAX_ROUNDS = 64;
 const CONSECUTIVE_CORRECT_ANSWERS = 10;
 
+const FINISHED_TEXT = "You have now completed the task. Please download the results by clicking 'export results,' and email them to the experimenter. Once you have downloaded your results, you may close this page and return to the survey.";
+
 function App() {
   const [cards, setCards] = useState([]);
   const [rule, setRule] = useState(null);
@@ -170,7 +172,7 @@ function App() {
     return (
       <div className='game'>
         <h1>Task Finished</h1>
-        <p>All rounds completed.</p>
+        <p>{FINISHED_TEXT}</p>
         <button className='export' onClick={exportResults}>Export results</button>
       </div>
     );
@@ -200,7 +202,7 @@ function App() {
         <Card {...cards[cards.length - 1]} />
         <p className={message.includes('Correct') ? 'message success' : 'message error'}>{message}</p>
       </div>
-      
+
       <button className='export' onClick={exportResults}>Export results</button>
     </div>
   );
