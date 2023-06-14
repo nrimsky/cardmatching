@@ -65,7 +65,7 @@ function App() {
 
 
   useEffect(() => {
-    // Fade message after 2 seconds
+    // Fade message after 1 second
     const messageTimer = setTimeout(() => {
       setMessage('   ');
     }, 1000);
