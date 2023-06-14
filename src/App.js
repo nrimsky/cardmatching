@@ -24,6 +24,7 @@ function App() {
   const [persevErrors, setPersevErrors] = useState(0);
   const [persev, setPersev] = useState(0);
   const [subnum, setSubnum] = useState(null);
+  const [selectedCardIndex, setSelectedCardIndex] = useState(null);
 
   useEffect(() => {
     if (introFinished && startTime === null) {
@@ -75,6 +76,7 @@ function App() {
   }, [message]);
 
   const handleCardClick = (card, index) => {
+    setSelectedCardIndex(index);
     const isCorrectMatchCard = isCorrectMatch(card, cards[cards.length - 1], rule);
     const abstime = (Date.now() - startTime) / 1000;
     const timeElapsed = abstime - results[results.length - 1]?.abstime ?? 0;
@@ -132,14 +134,18 @@ function App() {
     }
     const handleKeyPress = (event) => {
       const key = event.key;
+      let index;
       if (key === 'd') {
-        handleCardClick(cards[0]);
+        index = 0;
       } else if (key === 'v') {
-        handleCardClick(cards[1]);
+        index = 1;
       } else if (key === 'n') {
-        handleCardClick(cards[2]);
+        index = 2;
       } else if (key === 'k') {
-        handleCardClick(cards[3]);
+        index = 3;
+      }
+      if (index !== undefined) {
+        handleCardClick(cards[index], index);
       }
     };
 
@@ -148,7 +154,7 @@ function App() {
     return () => {
       document.removeEventListener('keypress', handleKeyPress);
     };
-  }, [cards, handleCardClick, introFinished]);
+  }, [cards, introFinished]);
 
   const exportResults = () => {
     let csvContent = "subnum,trial,run,rule,color,shape,number,resp,corr,last_corr,corr_col,corr_shape,corr_num,persev,persev_err,rt,abstime\n";
@@ -193,7 +199,7 @@ function App() {
 
         {cards.slice(0, 4).map((card, index) => (
           <div className='card-wrapper' key={index} >
-            <Card {...card} id={index} isSelectable={true} onClick={() => handleCardClick(card, index)} />
+            <Card {...card} id={index} isSelectable={true} onClick={() => handleCardClick(card, index)} isSelected={index === selectedCardIndex} />
             <span className='letter'>{['d', 'v', 'n', 'k'][index]}</span>
           </div>
         ))}
