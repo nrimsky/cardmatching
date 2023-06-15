@@ -4,10 +4,10 @@ import './App.css'
 import { generateDeck, generateNewRule, isCorrectMatch, generateRule } from './lib/helpers';
 import Intro from './components/Intro';
 
-const MAX_ROUNDS = 64;
+const MAX_ROUNDS = 3;
 const CONSECUTIVE_CORRECT_ANSWERS = 10;
 
-const FINISHED_TEXT = "You have now completed the task. Please download the results by clicking 'export results,' and email them to the experimenter. Once you have downloaded your results, you may close this page and return to the survey.";
+const FINISHED_TEXT = "You have now completed the task. Please download the results by clicking 'export results,' and email them to the investigator. Once you have downloaded your results, you may close this page and return to the survey.";
 
 function App() {
   const [cards, setCards] = useState([]);
