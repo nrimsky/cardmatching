@@ -1,18 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { getTranslation } from "../lib/helpers";
 
-const text =
-  "You are about to take part in an experiment in which you need to categorise cards based on the pictures appearing on them. To begin, you will see four piles.";
-
-const text2 =
-  "Each pile has a different number, colour, and shape. A new card is displayed below the piles for which you will determine which pile each belongs to. From left to right, the piles correspond with 'd' 'v' 'n' then 'k.' Press the corresponding key to choose what pile each new card belongs in. The correct answer depends upon a rule, but you will not know what the rule is. But, we will tell you on each trial whether or not you were correct.";
-
-const text3 =
-  "Finally, the rule may change during the task, so when it does, you should figure out what the rule is as quickly as possible and change with it.";
-
-const allText = ["", text, text2, text3];
-
-export default function Intro({ onComplete }) {
+export default function Intro({ onComplete, lang }) {
   const [textIndex, setTextIndex] = useState(0);
   const [code, setCode] = useState("");
 
@@ -23,6 +13,8 @@ export default function Intro({ onComplete }) {
       onComplete(code);
     }
   };
+
+  const allText = ["", getTranslation("INTRO_TEXT", lang), getTranslation("INSTRUCTIONS_2", lang), getTranslation("INSTRUCTIONS_4", lang)];
 
   useEffect(() => {
     if (textIndex > 0) {
@@ -36,13 +28,13 @@ export default function Intro({ onComplete }) {
   if (textIndex === 0) {
     return (
       <div className="intro">
-        <div className="intro-text">Enter your code</div>
+        <div className="intro-text">{getTranslation("ENTER_CODE", lang)}</div>
         <input
           type="text"
           value={code}
           onChange={(e) => setCode(e.target.value)}
         />
-        <button onClick={handleNext}>Continue</button>
+        <button onClick={handleNext}>{getTranslation("CONTINUE", lang)}</button>
       </div>
     );
   }
@@ -52,7 +44,7 @@ export default function Intro({ onComplete }) {
       <div className="intro-text">
         <p>{allText[textIndex]}</p>
       </div>
-      <p>Press any key to {textIndex === 3 ? 'begin': 'continue'}</p>
+      <p>{textIndex === 3 ? getTranslation("INSTRUCTIONS_5", lang): getTranslation("INSTRUCTIONS_3", lang)}</p>
     </div>
   );
 }

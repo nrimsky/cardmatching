@@ -1,0 +1,54 @@
+{
+    "TITLE": {
+        "english": "Card Sorting Task",
+        "french": "Tâche de Tri de Cartes"
+    },
+    "INTRO_TEXT": {
+        "english": "You are about to take part in an experiment in which you need to categorise cards based on the pictures appearing on them. To begin, you will see four piles.",
+        "french": "Vous allez participer à une expérience scientifique dans laquelle vous devez classer les cartes en fonction des images qui y figurent. Pour commencer, vous verrez quatre piles."
+    },
+    "INSTRUCTIONS_1": {
+        "english": "Press any key to continue.",
+        "french": "Appuyez sur n'importe quelle touche pour continuer."
+    },
+    "INSTRUCTIONS_2": {
+        "english": "Each pile has a different number, colour, and shape. A new card is displayed below the piles for which you will determine which pile each belongs to. From left to right, the piles correspond with 'd' 'v' 'n' then 'k.' Press the corresponding key to choose what pile each new card belongs in. The correct answer depends upon a rule, but you will not know what the rule is. But, we will tell you on each trial whether or not you were correct.",
+        "french": "Chaque pile a un nombre, une couleur, et une forme différents. Une nouvelle carte est affichée sous les piles pour laquelle vous devrez déterminer à quelle pile chacune appartient. De gauche à droite, les piles correspondent à 'd' 'v' 'n' puis 'k.' Appuyer sur la touche correspondante pour choisir à quelle pile chaque nouvelle carte appartient. La bonne réponse dépend d'une règle, mais vous ne saurez pas quelle est la règle. Cependant, nous vous dirons pour chaque réponse si vous aviez raison ou pas."
+    },
+    "INSTRUCTIONS_3": {
+        "english": "Press any key to continue.",
+        "french": "Appuyez sur n'importe quelle touche pour continuer."
+    },
+    "CONTINUE": {
+        "english": "Continue",
+        "french": "Continuer"
+    },
+    "ENTER_CODE": {
+        "english": "Enter your code.",
+        "french": "Entrer votre code."
+    },
+    "INSTRUCTIONS_4": {
+        "english": "Finally, the rule may change during the task, so when it does, you should figure out what the rule is as quickly as possible and change with it.",
+        "french": "Enfin, la règle peut changer au cours de la tâche, donc quand c'est la cas, vous devez déterminer quelle est la règle le plus rapidement possible et changer en conséquence."
+    },
+    "INSTRUCTIONS_5": {
+        "english": "Press any key to begin.",
+        "french": "Appuyez sur n'importe quelle touche pour commencer."
+    },
+    "TASK_PROMPT": {
+        "english": "Use keyboard to sort card",
+        "french": "Utilisez votre clavier pour trier la carte"
+    },
+    "TASK_FINISHED": {
+        "english": "Task Finished",
+        "french": "Tâche terminée"
+    },
+    "COMPLETE_TEXT": {
+        "english": "Please download the results by clicking 'export results,' and email them to the investigator. Once you have downloaded your results, you may close this page and return to the survey.",
+        "french": "Veuillez télécharger les résultats en cliquant sur \"exporter les résultats,\" et les envoyer par e-mail à l'investigateur. Lorsque vous avez téléchargé vos résultats, vous pouvez fermer cette fenêtre et retourner à l'enquête."
+    },
+    "EXPORT_BUTTON": {
+        "english": "Export Results",
+        "french": "Exporter les résultats"
+    }
+}

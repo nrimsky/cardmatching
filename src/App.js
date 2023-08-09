@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Card from './components/Card';
 import './App.css'
-import { generateDeck, generateNewRule, isCorrectMatch, generateRule, getCorrectMatch } from './lib/helpers';
+import { generateDeck, generateNewRule, isCorrectMatch, generateRule, getCorrectMatch, getTranslation } from './lib/helpers';
 import Intro from './components/Intro';
+import useQueryParam from './lib/useQueryParam';
 
 const MAX_CLICKS = 64;
 const CONSECUTIVE_CORRECT_ANSWERS = 10;
-
-const FINISHED_TEXT = "You have now completed the task. Please download the results by clicking 'export results,' and email them to the investigator. Once you have downloaded your results, you may close this page and return to the survey.";
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -21,6 +20,14 @@ function App() {
   const [subnum, setSubnum] = useState(null);
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
   const [lastRule, setLastRule] = useState(null);
+  const [language, setLanguage] = useState('english');
+  const queryLang = useQueryParam('lang');
+
+  useEffect(() => {
+    if (queryLang === 'fr') {
+      setLanguage('french');
+    }
+  }, [queryLang]);
 
   useEffect(() => {
     if (introFinished && startTime === null) {
@@ -70,7 +77,7 @@ function App() {
     setSelectedCardIndex(index);
     const isCorrectMatchCard = isCorrectMatch(card, cards[cards.length - 1], rule);
     const persevError = !isCorrectMatchCard && lastRule !== null && isCorrectMatch(card, cards[cards.length - 1], lastRule);
-    const persev = (results[results.length-1]?.persev ?? 0) + (persevError ? 1: 0);
+    const persev = (results[results.length - 1]?.persev ?? 0) + (persevError ? 1 : 0);
     const lastCorr = results[results.length]?.corr;
     const correctMatch = getCorrectMatch(cards[cards.length - 1], rule);
     const abstime = (Date.now() - startTime) / 1000;
@@ -174,15 +181,15 @@ function App() {
   if (results.length >= MAX_CLICKS) {
     return (
       <div className='game'>
-        <h1>Task Finished</h1>
-        <p>{FINISHED_TEXT}</p>
-        <button className='export' onClick={exportResults}>Export results</button>
+        <h1>{getTranslation("TASK_FINISHED", language)}</h1>
+        <p>{getTranslation("COMPLETE_TEXT", language)}</p>
+        <button className='export' onClick={exportResults}>{getTranslation("EXPORT_BUTTON", language)}</button>
       </div>
     );
   }
 
   if (!introFinished) {
-    return <Intro onComplete={(code) => {
+    return <Intro lang={language} onComplete={(code) => {
       setIntroFinished(true);
       setSubnum(code);
     }} />
@@ -190,8 +197,8 @@ function App() {
 
   return (
     <div className='game'>
-      <h1>Card Sorting Task</h1>
-      <h2>Use keyboard to sort card</h2>
+      <h1>{getTranslation("TITLE", language)}</h1>
+      <h2>{getTranslation("TASK_PROMPT", language)}</h2>
       <div className='top-cards'>
 
         {cards.slice(0, 4).map((card, index) => (

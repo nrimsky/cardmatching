@@ -1,3 +1,5 @@
+import data from '../data/translations.json';
+
 
 const shapes = ['triangle', 'star', 'cross', 'circle'];
 const colors = ['red', 'green', 'orange', 'blue'];
@@ -112,6 +114,9 @@ function getCorrectMatch(card, rule) {
     throw new Error('No match found');
 }
 
+function getTranslation(key, language) {
+    return data[key][language];
+}
 
 
-export { generateRule, generateDeck, shapes, colors, numbers, isCorrectMatch, generateNewRule, getCorrectMatch };
+export { getTranslation, generateRule, generateDeck, shapes, colors, numbers, isCorrectMatch, generateNewRule, getCorrectMatch };
